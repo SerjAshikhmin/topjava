@@ -23,15 +23,15 @@ public class MealsUtil {
             new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
     );
 
-    public static List<MealTo> getTos(List<Meal> meals, int caloriesPerDay) {
+    public static List<MealTo> getTos(Collection<Meal> meals, int caloriesPerDay) {
         return getFiltered(meals, caloriesPerDay, meal -> true);
     }
 
-    public static List<MealTo> getFilteredTos(List<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
+    public static List<MealTo> getFilteredTos(Collection<Meal> meals, int caloriesPerDay, LocalTime startTime, LocalTime endTime) {
         return getFiltered(meals, caloriesPerDay, meal -> TimeUtil.isBetweenInclusive(meal.getTime(), startTime, endTime));
     }
 
-    private static List<MealTo> getFiltered(List<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
+    private static List<MealTo> getFiltered(Collection<Meal> meals, int caloriesPerDay, Predicate<Meal> filter) {
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
                         Collectors.groupingBy(Meal::getDate, Collectors.summingInt(Meal::getCalories))
@@ -43,7 +43,7 @@ public class MealsUtil {
     }
 
     private static MealTo createTo(Meal meal, boolean excess) {
-        return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+        return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 
 }
