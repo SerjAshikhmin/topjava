@@ -31,33 +31,33 @@ public class MealRestController {
 
     public Meal get(int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("get meal {} for user {}", id, userId);
+        log.debug("get meal {} for user {}", id, userId);
         return service.get(id, userId);
     }
 
     public void delete(int id) {
         int userId = SecurityUtil.authUserId();
-        log.info("delete meal {} for user {}", id, userId);
+        log.debug("delete meal {} for user {}", id, userId);
         service.delete(id, userId);
     }
 
     public List<MealTo> getAll() {
         int userId = SecurityUtil.authUserId();
-        log.info("getAll for user {}", userId);
+        log.debug("getAll for user {}", userId);
         return MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
     }
 
     public Meal create(Meal meal) {
         int userId = SecurityUtil.authUserId();
         checkNew(meal);
-        log.info("create {} for user {}", meal, userId);
+        log.debug("create {} for user {}", meal, userId);
         return service.create(meal, userId);
     }
 
     public void update(Meal meal, int id) {
         int userId = SecurityUtil.authUserId();
         assureIdConsistent(meal, id);
-        log.info("update {} for user {}", meal, userId);
+        log.debug("update {} for user {}", meal, userId);
         service.update(meal, userId);
     }
 
@@ -70,7 +70,7 @@ public class MealRestController {
     public List<MealTo> getBetween(@Nullable LocalDate startDate, @Nullable LocalTime startTime,
                                    @Nullable LocalDate endDate, @Nullable LocalTime endTime) {
         int userId = SecurityUtil.authUserId();
-        log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
+        log.debug("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
 
         List<Meal> mealsDateFiltered = service.getBetweenDates(startDate, endDate, userId);
         return MealsUtil.getFilteredTos(mealsDateFiltered, SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);

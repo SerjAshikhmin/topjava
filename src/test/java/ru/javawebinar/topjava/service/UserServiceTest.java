@@ -34,17 +34,22 @@ public class UserServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(newUser);
         newUser.setId(created.getId());
-        assertMatch(service.getAll(), ADMIN, newUser, USER);
+        List<User> allUsers = service.getAll();
+
+        assertMatch(allUsers, ADMIN, newUser, USER);
     }
 
     @Test(expected = DataAccessException.class)
     public void duplicateMailCreate() throws Exception {
-        service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
+        User newUser = new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER);
+
+        service.create(newUser);
     }
 
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
+
         assertMatch(service.getAll(), ADMIN);
     }
 
@@ -56,6 +61,7 @@ public class UserServiceTest {
     @Test
     public void get() throws Exception {
         User user = service.get(USER_ID);
+
         assertMatch(user, USER);
     }
 
@@ -67,6 +73,7 @@ public class UserServiceTest {
     @Test
     public void getByEmail() throws Exception {
         User user = service.getByEmail("user@yandex.ru");
+
         assertMatch(user, USER);
     }
 
@@ -75,13 +82,17 @@ public class UserServiceTest {
         User updated = new User(USER);
         updated.setName("UpdatedName");
         updated.setCaloriesPerDay(330);
+
         service.update(updated);
-        assertMatch(service.get(USER_ID), updated);
+        User user = service.get(USER_ID);
+
+        assertMatch(user, updated);
     }
 
     @Test
     public void getAll() throws Exception {
-        List<User> all = service.getAll();
-        assertMatch(all, ADMIN, USER);
+        List<User> allUsers = service.getAll();
+
+        assertMatch(allUsers, ADMIN, USER);
     }
 }
