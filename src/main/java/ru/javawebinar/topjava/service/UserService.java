@@ -30,7 +30,7 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id) {
         log.debug("delete user {}", id);
         checkNotFoundWithId(repository.delete(id), id);
     }
