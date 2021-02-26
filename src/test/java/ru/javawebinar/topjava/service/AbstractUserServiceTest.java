@@ -47,9 +47,9 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void get() throws Exception {
-        User user = service.get(USER_ID);
+        User user = service.get(ADMIN_ID);
 
-        assertMatch(user, USER);
+        assertMatch(user, ADMIN);
     }
 
     @Test(expected = NotFoundException.class)
@@ -59,9 +59,9 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByEmail() throws Exception {
-        User user = service.getByEmail("user@yandex.ru");
+        User user = service.getByEmail("admin@gmail.com");
 
-        assertMatch(user, USER);
+        assertMatch(user, ADMIN);
     }
 
     @Test
