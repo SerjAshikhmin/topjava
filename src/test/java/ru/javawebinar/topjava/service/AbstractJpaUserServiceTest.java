@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
@@ -11,7 +11,7 @@ import java.util.Set;
 abstract public class AbstractJpaUserServiceTest extends AbstractUserServiceTest {
 
     @Test
-    public void createWithException() throws Exception {
+    void createWithException() throws Exception {
         validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);

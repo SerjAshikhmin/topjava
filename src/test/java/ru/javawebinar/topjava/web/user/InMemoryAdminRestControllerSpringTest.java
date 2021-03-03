@@ -11,9 +11,8 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
-@RunWith(SpringRunner.class)
-public class InMemoryAdminRestControllerSpringTest {
+@SpringJUnitConfig(locations = {"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
+class InMemoryAdminRestControllerSpringTest {
 
     @Autowired
     private AdminRestController controller;
@@ -21,8 +20,8 @@ public class InMemoryAdminRestControllerSpringTest {
     @Autowired
     private InMemoryUserRepository repository;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
         repository.init();
     }
 
@@ -32,8 +31,8 @@ public class InMemoryAdminRestControllerSpringTest {
         controller.get(USER_ID);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void deleteNotFound() throws Exception {
-        controller.delete(10);
+    @Test
+    void deleteNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () -> controller.delete(10));
     }
 }
