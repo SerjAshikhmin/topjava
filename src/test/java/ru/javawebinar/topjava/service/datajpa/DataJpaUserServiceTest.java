@@ -14,7 +14,7 @@ import static ru.javawebinar.topjava.UserTestData.*;
 @ActiveProfiles(DATAJPA)
 class DataJpaUserServiceTest extends AbstractJpaUserServiceTest {
     @Test
-    public void getWithMeals() throws Exception {
+    void getWithMeals() throws Exception {
         User admin = service.getWithMeals(ADMIN_ID);
         assertMatch(admin, ADMIN);
         MealTestData.assertMatch(admin.getMeals(), MealTestData.ADMIN_MEAL2, MealTestData.ADMIN_MEAL1);
