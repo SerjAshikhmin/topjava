@@ -3,17 +3,10 @@ var context, form;
 function makeEditable(ctx) {
     context = ctx;
     form = $('#detailsForm');
-    $(".delete").click(function () {
-        if (confirm('Are you sure?')) {
-            deleteRow($(this).attr("id"));
-        }
-    });
-
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
     });
 
-    // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
     $.ajaxSetup({cache: false});
 }
 
@@ -23,19 +16,19 @@ function add() {
 }
 
 function deleteRow(id) {
-    $.ajax({
-        url: context.ajaxUrl + id,
-        type: "DELETE"
-    }).done(function () {
-        updateTable();
-        successNoty("Deleted");
-    });
+    if (confirm('Are you sure?')) {
+        $.ajax({
+            url: context.ajaxUrl + id,
+            type: "DELETE"
+        }).done(function () {
+            context.updateTable();
+            successNoty("Deleted");
+        });
+    }
 }
 
-function updateTable() {
-    $.get(context.ajaxUrl, function (data) {
-        context.datatableApi.clear().rows.add(data).draw();
-    });
+function updateTableByData(data) {
+    context.datatableApi.clear().rows.add(data).draw();
 }
 
 function save() {
@@ -45,12 +38,12 @@ function save() {
         data: form.serialize()
     }).done(function () {
         $("#editRow").modal("hide");
-        updateTable();
+        context.updateTable();
         successNoty("Saved");
     });
 }
 
-let failedNote;
+var failedNote;
 
 function closeNoty() {
     if (failedNote) {
