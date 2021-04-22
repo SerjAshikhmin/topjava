@@ -1,14 +1,14 @@
 package ru.javawebinar.topjava.model;
 
 import org.hibernate.Hibernate;
-import org.springframework.data.domain.Persistable;
+import ru.javawebinar.topjava.HasId;
 
 import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
 //@JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, isGetterVisibility = NONE, setterVisibility = NONE)
-public abstract class AbstractBaseEntity implements Persistable<Integer> {
+public abstract class AbstractBaseEntity implements HasId {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -23,6 +23,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
         this.id = id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
@@ -30,11 +31,6 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
     @Override
     public Integer getId() {
         return id;
-    }
-
-    @Override
-    public boolean isNew() {
-        return this.id == null;
     }
 
     @Override
