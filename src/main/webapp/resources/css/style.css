@@ -10,7 +10,10 @@ tr[data-mealExcess="true"] {
     cursor: pointer;
 }
 
-/*https://getbootstrap.com/docs/4.0/examples/sticky-footer/sticky-footer.css*/
+tr[data-userEnabled="false"] {
+    opacity: 0.3;
+}
+
 html {
     position: relative;
     min-height: 100%;
