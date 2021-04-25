@@ -27,8 +27,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         Integer newId = created.getId();
         newUser.setId(newId);
 
-        assertMatch(created, newUser);
-        assertMatch(service.get(newId), newUser);
+        USER_MATCHERS.assertMatch(created, newUser);
+        USER_MATCHERS.assertMatch(service.get(newId), newUser);
     }
 
     @Test
@@ -55,7 +55,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     void get() throws Exception {
         User user = service.get(ADMIN_ID);
 
-        assertMatch(user, ADMIN);
+        USER_MATCHERS.assertMatch(user, ADMIN);
     }
 
     @Test
@@ -68,7 +68,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     void getByEmail() throws Exception {
         User user = service.getByEmail("admin@gmail.com");
 
-        assertMatch(user, ADMIN);
+        USER_MATCHERS.assertMatch(user, ADMIN);
     }
 
     @Test
@@ -78,14 +78,14 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         service.update(new User(updated));
         User user = service.get(USER_ID);
 
-        assertMatch(user, updated);
+        USER_MATCHERS.assertMatch(user, updated);
     }
 
     @Test
     void getAll() throws Exception {
         List<User> allUsers = service.getAll();
 
-        assertMatch(allUsers, ADMIN, USER);
+        USER_MATCHERS.assertMatch(allUsers, ADMIN, USER);
     }
 
     @Test
