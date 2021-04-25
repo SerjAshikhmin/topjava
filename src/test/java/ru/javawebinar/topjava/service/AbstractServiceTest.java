@@ -10,7 +10,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
-import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.TimingExtension;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -28,11 +27,6 @@ abstract class AbstractServiceTest {
 
     @Autowired
     private Environment env;
-
-    boolean isJpaBased() {
-        //return Arrays.stream(env.getActiveProfiles()).noneMatch(Profiles.JDBC::equals);
-        return env.acceptsProfiles(org.springframework.core.env.Profiles.of(Profiles.JPA, Profiles.DATAJPA));
-    }
 
     <T extends Throwable> void validateRootCause(Runnable runnable, Class<T> exceptionClass) {
         assertThrows(exceptionClass, () -> {
